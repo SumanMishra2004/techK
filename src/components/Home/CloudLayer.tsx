@@ -1,0 +1,101 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const CloudStack = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cloudRefs = useRef<HTMLDivElement[]>([]);
+
+  // 1. EXACTLY 8 CLOUDS
+  // Spaced out from top (0%) to bottom (95%)
+  const cloudLayers = [
+    // Top Section
+    { id: 1, top: 0, zIndex: 10, speed: 0.2 }, // Background (Slow)
+    { id: 2, top: 5, zIndex: 50, speed: 1.5 }, // Foreground (Fast)
+
+    // Middle Section
+    { id: 3, top: 20, zIndex: 20, speed: 0.4 }, 
+    { id: 4, top: 35, zIndex: 40, speed: 1.2 }, 
+    { id: 5, top: 40, zIndex: 15, speed: 0.3 }, 
+
+    // Bottom Section
+    { id: 6, top: 50, zIndex: 35, speed: 1.8 }, 
+    { id: 7, top: 65, zIndex: 25, speed: 0.8 }, 
+    { id: 8, top: 75, zIndex: 60, speed: 2.5 }, // Very fast bottom cloud
+  ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      cloudRefs.current.forEach((cloud, i) => {
+        if (!cloud) return;
+
+        const layer = cloudLayers[i];
+        const movementY = 50 * layer.speed; 
+
+        gsap.fromTo(
+          cloud,
+          { yPercent: movementY }, 
+          {
+            yPercent: 0, 
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom center",
+              scrub: 1, 
+            },
+          }
+        );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef} 
+      // Height: 100vh on mobile, taller on desktop
+      className="relative w-full h-[100vh] md:h-[150vh] py-10 overflow-x-clip overflow-y-visible"
+    >
+      {cloudLayers.map((layer, index) => (
+        <div
+          key={layer.id}
+          ref={(el) => {
+            if (el) cloudRefs.current[index] = el;
+          }}
+          className="absolute w-full h-full pointer-events-none flex justify-center"
+          style={{
+            zIndex: layer.zIndex,
+            top: `${layer.top}%`, 
+            left: 0, 
+          }}
+        >
+          {/* 2. SCALE UPDATE:
+              scale-[3.0] -> Mobile (300% Scale)
+              md:scale-[1.5] -> Tablet
+              lg:scale-[1.2] -> Desktop 
+          */}
+          <div className="relative w-full h-full transition-transform duration-300
+                          scale-[3.0] md:scale-[1.5] lg:scale-[1.2]">
+            <Image
+              src="/cloud/image.png"
+              alt={`Cloud layer ${layer.id}`}
+              fill
+              className="object-contain"
+              priority={index < 3} // Only prioritize top 3 images
+              sizes="(max-width: 768px) 300vw, (max-width: 1200px) 150vw, 100vw"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default CloudStack;
