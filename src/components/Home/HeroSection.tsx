@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 // Register the plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -27,7 +28,6 @@ export default function HomeFirstPage() {
           start: "top top", // Start fading when the top of the hero hits the top of the viewport
           end: "bottom -50%", // Finish fading when the bottom of the hero is near the top
           scrub: true, // Link animation to scrollbar
-           markers: true, // Uncomment to debug
         },
       });
     }, containerRef);
@@ -38,12 +38,15 @@ export default function HomeFirstPage() {
   return (
     <div
       ref={containerRef}
-      className="flex min-h-screen w-full items-center justify-center pt-20 z-10"
+      className="relative flex min-h-screen w-full items-center justify-center pt-20 z-10 overflow-hidden"
     >
+       {/* Background Random Boxes */}
+       <BackgroundBoxes />
+
       {/* We wrap the content in a separate ref to animate its opacity */}
       <div
         ref={contentRef}
-        className="h-auto lg:gap-10 md:gap-7 gap-5 flex flex-col items-center justify-between"
+        className="h-auto lg:gap-10 md:gap-7 gap-5 flex flex-col items-center justify-between relative z-10"
       >
         {/* MAIN TECH LAYOUT */}
         <TechLayout />
@@ -73,9 +76,63 @@ export default function HomeFirstPage() {
           </div>
         </div>
       </div>
+
+       {/* Social Icons (Bottom Right) */}
+       <div className="absolute md:bottom-8 md:right-8 right-2 bottom-2 z-20 flex flex-col items-end md:gap-3 gap-0">
+        <p className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-1">
+          Follow the hype
+        </p>
+        <div className="flex items-center gap-4">
+          <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors transform hover:scale-110">
+            <Instagram size={20} />
+          </a>
+          <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors transform hover:scale-110">
+            <Linkedin size={20} />
+          </a>
+          <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors transform hover:scale-110">
+            <Twitter size={20} />
+          </a>
+        </div>
+      </div>
+      
+       {/* Background Text (Bottom Left) */}
+       <div className="absolute bottom-8 left-8 z-20 hidden md:block">
+         <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">
+           Est. 2026 . Kolkata
+         </p>
+       </div>
     </div>
   );
 }
+
+// ==========================================
+// BACKGROUND BOXES COMPONENT
+// ==========================================
+const BackgroundBoxes = () => {
+  // Hardcoded random positions to ensure consistency during SSR/hydration
+  const boxes = [
+    { top: "15%", left: "10%", w: "w-16", h: "h-16" },
+    { top: "25%", left: "85%", w: "w-12", h: "h-12" },
+    { top: "65%", left: "15%", w: "w-20", h: "h-20" },
+    { top: "75%", left: "75%", w: "w-14", h: "h-14" },
+    { top: "40%", left: "5%", w: "w-8", h: "h-8" },
+    { top: "10%", left: "60%", w: "w-10", h: "h-10" },
+    { top: "85%", left: "30%", w: "w-24", h: "h-24" },
+    { top: "50%", left: "92%", w: "w-16", h: "h-16" },
+  ];
+
+  return (
+    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none">
+      {boxes.map((box, i) => (
+        <div
+          key={i}
+          className={`absolute ${box.w} ${box.h} bg-gray-500/10 border border-gray-500/20 backdrop-blur-[1px]`}
+          style={{ top: box.top, left: box.left }}
+        />
+      ))}
+    </div>
+  );
+};
 
 // ==========================================
 // 2. TECH LAYOUT COMPONENT

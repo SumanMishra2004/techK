@@ -18,12 +18,12 @@ const AboutSection = () => {
     if (spans && spans.length > 0) {
       gsap.to(spans, {
         opacity: 1,
-        stagger: 0.1,
+        stagger: 0.2,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 70%", // Start animation when section is partially visible
-          end: "bottom 70%", // End when section is mostly scrolled
+          end: "bottom 80%", // End when section is mostly scrolled
           scrub: true, // Link animation progress to scrollbar
         },
       });
@@ -35,13 +35,31 @@ const AboutSection = () => {
 
   // Text content adapted for the project
   const textContent = [
-    "Tech", "Kurukshetra", "isn't", "just", "another", "tech", "fest",
-    "it's", "India's", "fastest-growing", "36-hour", "coding",
-    "battleground,", "where", "innovators", "and",
-    "community", "members", "unite", "to",
-    "build", "real-world", "tech", "solutions.",
-    "Tech", "Kurukshetra", "challenges", "you", "to", "dream",
-    "big,", "code", "harder,", "and", "create", "impact."
+   "Step", "into", "a", "arena", "of", "ideas,",
+"where", "every", "line", "of", "code",
+"shapes", "the", "future", "of", "technology.",
+
+"Not", "just", "a", "competition,",
+"but", "a", "movement", "of", "builders",
+"driven", "by", "passion", "and", "purpose.",
+
+"From", "midnight", "debugging",
+"to", "sunrise", "breakthroughs,",
+"this", "is", "where", "legends", "are", "made.",
+
+"Collaborate,", "innovate,", "and",
+"push", "boundaries", "beyond", "limits.",
+
+"Here,", "hackers", "become", "heroes,",
+"and", "projects", "turn", "into", "possibilities.",
+
+"Tech", "Kurukshetra", "is", "your",
+"chance", "to", "learn,", "lead,",
+"and", "leave", "a", "mark", "on", "the", "world.",
+
+"Because", "the", "next", "big", "idea",
+"could", "start", "with", "you", "today."
+
   ];
 
   return (
@@ -49,7 +67,7 @@ const AboutSection = () => {
    
     <div
       ref={containerRef}
-      className="mx-auto flex max-w-4xl flex-col items-center space-y-8 px-4 md:mt-120 mt-70 "
+      className="mx-auto flex max-w-4xl flex-col items-center space-y-8 px-4  md:mt-40 mt-5 "
     >
       {/* HEADER */}
       <div className="w-full select-none">
