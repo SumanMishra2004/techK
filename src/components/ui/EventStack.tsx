@@ -77,7 +77,7 @@ const StickyCard002 = ({
             scale: 0.9, // Less aggressive scaling for better mobile view
             rotation: -2, // Subtle rotation
             opacity: 0.5, // Fade out slightly to focus on new card
-            filter: "blur(2px)", // Optional: slight blur for depth
+            // filter: "blur(2px)", // REMOVED: Blur causes significant performance lag
             duration: 1,
             ease: "none",
           },
@@ -133,6 +133,7 @@ const StickyCard002 = ({
               )}
               style={{
                 zIndex: i + 1, // Ensure proper stacking order
+                willChange: "transform, opacity", // OPTIMIZATION: Hint browser to promote layer
               }}
               ref={(el) => {
                 cardRefs.current[i] = el;

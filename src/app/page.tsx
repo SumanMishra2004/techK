@@ -1,13 +1,22 @@
 import HeroSection from "@/components/Home/HeroSection";
 import CloudLayer from "@/components/Home/CloudLayer";
 import AboutSection from "@/components/Home/AboutSection";
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { Fade } from "react-awesome-reveal";
 import { StickyCard002 } from "@/components/ui/EventStack";
+import { Skiper30 } from "@/components/ui/PreviousImages";
+import Marquee from "@/components/ui/InfiniteLine";
+import TimelineAnimation from "@/components/ui/TimelineAnimation";
+import SponsorsSection from "@/components/Home/SponsorsSection";
+import TeamSection from "@/components/Home/TeamSection";
+import FAQSection from "@/components/Home/FAQSection";
+import Footer from "@/components/Home/Footer";
+
 function HomePage() {
 
-  const cardData = [
+  const cardData = useMemo(
+    () => [
   {
     "id": 1,
     "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
@@ -58,7 +67,9 @@ function HomePage() {
     "link": "#",
     "alt": "Developer working late at night"
   }
-]
+],
+    []
+  );
 
   return (
   
@@ -127,6 +138,7 @@ function HomePage() {
     </button>
   </div>
 </div>
+<TimelineAnimation />
 <div className="relative z-50 w-full pointer-events-none mt-20 overflow-x-hidden leading-none -mb-1">
   <div className="w-[125%] left-1/2 -translate-x-1/2 relative">
     
@@ -141,8 +153,23 @@ function HomePage() {
     />
     </Fade>
   </div>
-</div> 
-<div className="relative z-10 w-full pointer-events-none xl:-mt-80 2xl:-mt-86 lg:-mt-50 md:-mt-35 -mt-25 xl:pt-70 lg:pt-40 md:pt-25 pt-15 h-screen bg-black text-white text-center"> next section</div>
+</div>
+
+<div className="relative z-10 w-full pointer-events-none xl:-mt-80 2xl:-mt-86 lg:-mt-50 md:-mt-35 -mt-25 bg-black text-white text-center"> 
+  <Skiper30/>
+  <div className="absolute md:-bottom-20  -bottom-10 w-full pointer-events-auto overflow-x-clip z-50"><Marquee /></div>
+</div>
+{/* SPONSORS */}
+<SponsorsSection />
+
+{/* TEAM */}
+<TeamSection />
+
+{/* FAQ */}
+<FAQSection />
+
+{/* FOOTER */}
+<Footer />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
@@ -110,16 +110,19 @@ export default function HomeFirstPage() {
 // ==========================================
 const BackgroundBoxes = () => {
   // Hardcoded random positions to ensure consistency during SSR/hydration
-  const boxes = [
-    { top: "15%", left: "10%", w: "w-16", h: "h-16" },
-    { top: "25%", left: "85%", w: "w-12", h: "h-12" },
-    { top: "65%", left: "15%", w: "w-20", h: "h-20" },
-    { top: "75%", left: "75%", w: "w-14", h: "h-14" },
-    { top: "40%", left: "5%", w: "w-8", h: "h-8" },
-    { top: "10%", left: "60%", w: "w-10", h: "h-10" },
-    { top: "85%", left: "30%", w: "w-24", h: "h-24" },
-    { top: "50%", left: "92%", w: "w-16", h: "h-16" },
-  ];
+  const boxes = useMemo(
+    () => [
+      { top: "15%", left: "10%", w: "w-16", h: "h-16" },
+      { top: "25%", left: "85%", w: "w-12", h: "h-12" },
+      { top: "65%", left: "15%", w: "w-20", h: "h-20" },
+      { top: "75%", left: "75%", w: "w-14", h: "h-14" },
+      { top: "40%", left: "5%", w: "w-8", h: "h-8" },
+      { top: "10%", left: "60%", w: "w-10", h: "h-10" },
+      { top: "85%", left: "30%", w: "w-24", h: "h-24" },
+      { top: "50%", left: "92%", w: "w-16", h: "h-16" },
+    ],
+    []
+  );
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none">

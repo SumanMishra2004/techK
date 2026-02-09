@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -13,21 +13,24 @@ const CloudStack = () => {
 
   // 1. EXACTLY 8 CLOUDS
   // Spaced out from top (0%) to bottom (95%)
-  const cloudLayers = [
-    // Top Section
-    { id: 1, top: 0, zIndex: 10, speed: 0.2 }, // Background (Slow)
-    { id: 2, top: 5, zIndex: 50, speed: 1.5 }, // Foreground (Fast)
+  const cloudLayers = useMemo(
+    () => [
+      // Top Section
+      { id: 1, top: 0, zIndex: 10, speed: 0.2 }, // Background (Slow)
+      { id: 2, top: 5, zIndex: 50, speed: 1.5 }, // Foreground (Fast)
 
-    // Middle Section
-    { id: 3, top: 10, zIndex: 20, speed: 0.4 }, 
-    { id: 4, top: 15, zIndex: 40, speed: 1.2 }, 
-    { id: 5, top: 20, zIndex: 15, speed: 0.3 }, 
+      // Middle Section
+      { id: 3, top: 10, zIndex: 20, speed: 0.4 },
+      { id: 4, top: 15, zIndex: 40, speed: 1.2 },
+      { id: 5, top: 20, zIndex: 15, speed: 0.3 },
 
-    // Bottom Section
-    { id: 6, top: 30, zIndex: 35, speed: 1.8 }, 
-    { id: 7, top: 40, zIndex: 25, speed: 0.8 }, 
-    { id: 8, top: 45, zIndex: 60, speed: 2.5 }, // Very fast bottom cloud
-  ];
+      // Bottom Section
+      { id: 6, top: 30, zIndex: 35, speed: 1.8 },
+      { id: 7, top: 40, zIndex: 25, speed: 0.8 },
+      { id: 8, top: 45, zIndex: 60, speed: 2.5 }, // Very fast bottom cloud
+    ],
+    []
+  );
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -55,7 +58,7 @@ const CloudStack = () => {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [cloudLayers]);
 
   return (
     <div 
